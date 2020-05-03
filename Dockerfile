@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -16,7 +16,7 @@ RUN mkdir /surv && \
     tar xJf data.tar.xz && \
     ar x /survex-aven_1.2.40-1.999disco+1_amd64.deb && \
     tar xJf data.tar.xz && \
-    ln -s /usr/lib/x86_64-linux-gnu/libproj.so.15 /usr/lib/x86_64-linux-gnu/libproj.so.13 && \
+    ln -s /usr/lib/x86_64-linux-gnu/libproj.so.12 /usr/lib/x86_64-linux-gnu/libproj.so.13 && \
     true
 
 COPY entrypoint.sh /entrypoint.sh
