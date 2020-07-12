@@ -13,7 +13,7 @@ elif [ "kanin_rombon" == "$repo" ]; then
     entities=$(echo *.3d meritve/*/*.3d)
 elif [ "planina_poljana" == "$repo" ]; then
     ls *.svx survey/*/*.svx | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
-    entities=$(*.3d survey/*/*.3d)
+    entities=$(echo *.3d survey/*/*.3d)
 else
     echo "Unknown repo $repo"
     exit 1
