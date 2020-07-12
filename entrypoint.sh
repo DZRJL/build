@@ -12,8 +12,8 @@ elif [ "kanin_rombon" == "$repo" ]; then
     ls *.svx meritve/*/*.svx | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
     entities=$(echo *.3d meritve/*/*.3d)
 elif [ "planina_poljana" == "$repo" ]; then
-    find . -type f -name '*.svx' | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
-    entities=$(echo survey/*/*.3d)
+    ls *.svx survey/*/*.svx | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
+    entities=$(*.3d survey/*/*.3d)
 else
     echo "Unknown repo $repo"
     exit 1
