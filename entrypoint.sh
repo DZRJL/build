@@ -6,18 +6,26 @@ failedfile="${PWD}/failed"
 
 repo="$1"
 if [ "sistem_pokljuskega_grebena" == "$repo" ]; then
-    ls *.svx */svx/*.svx | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
-    entities=$(echo *.3d */svx/*.3d)
+    _svxFiles=*/svx/*.svx
+    _3dFiles=*/svx/*.3d
 elif [ "kanin_rombon" == "$repo" ]; then
-    ls *.svx meritve/*/*.svx | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
-    entities=$(echo *.3d meritve/*/*.3d)
+    if [ -d "meritve" ]; then
+        surveysDir="meritve"
+    elif [ -d "surveys" ]; then
+        surveysDir="surveys"
+    fi
+    _svxFiles=${surveysDir}/*/*.svx
+    _3dFiles=${surveysDir}/*/*.3d
 elif [ "planina_poljana" == "$repo" ]; then
-    ls *.svx survey/*/*.svx | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
-    entities=$(echo *.3d survey/*/*.3d)
+    surveysDir="survey"
+    _svxFiles=${surveysDir}/*/*.svx
+    _3dFiles=${surveysDir}/*/*.3d
 else
     echo "Unknown repo $repo"
     exit 1
 fi
+
+ls *.svx $_svxFiles | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; cavern \"\$(basename {)\" || echo \"{\" >> \"$failedfile\"" >> cavern.log
 
 if [ -f "$failedfile" ]; then
     echo "One or more conversions failed!"
@@ -25,7 +33,7 @@ if [ -f "$failedfile" ]; then
     exit 1
 fi
 
-for entity in $entities; do
+for entity in *.3d $_3dFiles; do
     md5=$(dump3d "$entity" | grep -vE '^DATE\ "' | grep -vE '^DATE_NUMERIC\ ' | md5sum | awk '{print $1}')
     echo "${entity},${md5}" >> "hashes.csv"
 
