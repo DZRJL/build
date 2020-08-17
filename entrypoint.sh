@@ -9,11 +9,7 @@ if [ "sistem_pokljuskega_grebena" == "$repo" ]; then
     _svxFiles=*/svx/*.svx
     _3dFiles=*/svx/*.3d
 elif [ "kanin_rombon" == "$repo" ]; then
-    if [ -d "meritve" ]; then
-        surveysDir="meritve"
-    elif [ -d "surveys" ]; then
-        surveysDir="surveys"
-    fi
+    surveysDir="surveys"
     _svxFiles=${surveysDir}/*/*.svx
     _3dFiles=${surveysDir}/*/*.3d
 elif [ "planina_poljana" == "$repo" ]; then
