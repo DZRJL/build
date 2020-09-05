@@ -13,7 +13,7 @@ elif [ "kanin_rombon" == "$repo" ]; then
     _svxFiles=${surveysDir}/*/*.svx
     _3dFiles=${surveysDir}/*/*.3d
 elif [ "planina_poljana" == "$repo" ]; then
-    surveysDir="survey"
+    surveysDir="surveys"
     _svxFiles=${surveysDir}/*/*.svx
     _3dFiles=${surveysDir}/*/*.3d
 else
