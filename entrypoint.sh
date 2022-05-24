@@ -26,6 +26,8 @@ ls *.svx $_svxFiles | xargs -I{ bash -c "echo \"{\"; cd \"\$(dirname {)\"; caver
 if [ -f "$failedfile" ]; then
     echo "One or more conversions failed!"
     cat "$failedfile"
+    echo "cavern.log"
+    cat cavern.log
     exit 1
 fi
 
