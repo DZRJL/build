@@ -39,4 +39,4 @@ for entity in *.3d $_3dFiles; do
     test -s /tmp/out && exit 1
 done
 
-zip -r artifact.zip *
+zip -r artifact.zip . -i "*.3d" "*.gpx" "ekataster-config.json" "hashes.csv"
