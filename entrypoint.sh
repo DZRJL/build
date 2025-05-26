@@ -32,11 +32,17 @@ if [ -f "$failedfile" ]; then
 fi
 
 for entity in *.3d $_3dFiles; do
-    md5=$(dump3d "$entity" | grep -vE '^DATE\ "' | grep -vE '^DATE_NUMERIC\ ' | md5sum | awk '{print $1}')
-    echo "${entity},${md5}" >> "hashes.csv"
+    md5_3d=$(dump3d "$entity" | grep -vE '^DATE\ "' | grep -vE '^DATE_NUMERIC\ ' | md5sum | awk '{print $1}')
+    echo "${entity},${md5_3d}" >> "hashes.csv"
 
     /surv/usr/bin/survexport --legs --gpx "$entity" "${entity%.3d}".gpx |& tee /tmp/out
     test -s /tmp/out && exit 1
+    
+    gpx_file="${entity%.3d}.gpx"
+    if [ -f "$gpx_file" ]; then
+        md5_gpx=$(md5sum "$gpx_file" | awk '{print $1}')
+        echo "${gpx_file},${md5_gpx}" >> "hashes.csv"
+    fi
 done
 
 zip -r artifact.zip . -i "*.3d" "*.gpx" "ekataster-config.json" "hashes.csv"
